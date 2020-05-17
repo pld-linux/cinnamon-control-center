@@ -51,7 +51,6 @@ Requires:	NetworkManager-applet >= 1.8.0
 Requires:	cinnamon-desktop >= %{cinnamon_desktop_ver}
 Requires:	cinnamon-menus >= %{cinnamon_menus_ver}
 Requires:	cinnamon-settings-daemon >= %{csd_ver}
-#Requires:	cinnamon-translations
 Requires:	colord >= 0.1.14
 Requires:	dbus-x11
 Requires:	gdk-pixbuf2 >= 2.23.0
