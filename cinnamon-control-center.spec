@@ -5,13 +5,16 @@
 Summary:	Utilities to configure the Cinnamon desktop
 Summary(pl.UTF-8):	Narzędzia do konfiguracji środowiska Cinnamon
 Name:		cinnamon-control-center
-Version:	4.4.0
+Version:	4.6.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/cinnamon-control-center/releases
 Source0:	https://github.com/linuxmint/cinnamon-control-center/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	83b0fb04ec865db2852502fbc03ff1fd
+# Source0-md5:	28702cb8cdcd2866f0663123abf61e90
+#Source1Download: https://github.com/linuxmint/cinnamon-translations/releases
+Source1:	https://github.com/linuxmint/cinnamon-translations/archive/%{version}/cinnamon-translations-%{version}.tar.gz
+# Source1-md5:	2a7f336ad50c2ec8ec4e80a7acf5f899
 URL:		https://github.com/linuxmint/cinnamon-control-center
 BuildRequires:	ModemManager-devel >= 0.7
 BuildRequires:	NetworkManager-devel >= 2:1.2.0
@@ -22,7 +25,6 @@ BuildRequires:	cinnamon-desktop-devel >= %{cinnamon_desktop_ver}
 BuildRequires:	cinnamon-menus-devel >= %{cinnamon_menus_ver}
 BuildRequires:	cinnamon-settings-daemon-devel >= %{csd_ver}
 BuildRequires:	colord-devel >= 0.1.14
-BuildRequires:	cups-devel >= 1.4
 BuildRequires:	dbus-glib-devel
 BuildRequires:	fontconfig-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.23.0
@@ -38,14 +40,10 @@ BuildRequires:	libtool >= 2:2.2
 BuildRequires:	libwacom-devel >= 0.27
 BuildRequires:	libxklavier-devel >= 5.1
 BuildRequires:	libxml2-devel >= 2.0
-BuildRequires:	libxslt-progs
 BuildRequires:	polkit-devel >= 0.103
-BuildRequires:	systemd-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXi-devel >= 1.2
 BuildRequires:	xorg-lib-libXxf86misc-devel
-BuildRequires:	xorg-lib-libxkbfile-devel
-BuildRequires:	xorg-proto-kbproto-devel
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	NetworkManager >= 2:1.8.0
 # nm-connection-editor for the network panel
@@ -55,7 +53,6 @@ Requires:	cinnamon-menus >= %{cinnamon_menus_ver}
 Requires:	cinnamon-settings-daemon >= %{csd_ver}
 #Requires:	cinnamon-translations
 Requires:	colord >= 0.1.14
-Requires:	cups-lib >= 1.4
 Requires:	dbus-x11
 Requires:	gdk-pixbuf2 >= 2.23.0
 # For the colour panel
@@ -111,7 +108,7 @@ Header files for Cinnamon control center.
 Pliki nagłówkowe Cinnamon control center.
 
 %prep
-%setup -q
+%setup -q -a1
 
 %build
 install -d m4
@@ -125,12 +122,12 @@ install -d m4
 %configure \
 	--disable-silent-rules \
 	--disable-static \
-	--enable-cups \
 	--enable-onlineaccounts \
 	--enable-systemd
 
 %{__make}
 
+%{__make} -C cinnamon-translations-%{version}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -141,7 +138,17 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libcinnamon-control-center.la \
 	$RPM_BUILD_ROOT%{_libdir}/cinnamon-control-center-1/panels/*.la
 
-%find_lang %{name}-timezones
+cd cinnamon-translations-%{version}
+for f in usr/share/locale/*/LC_MESSAGES/%{name}.mo ; do
+	install -D "$f" "$RPM_BUILD_ROOT/$f"
+done
+cd ..
+
+# not supported by glibc 2.31
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ie,frp}
+
+# cinnamon-control-center (from translations) and cinnamon-control-center-timezones domains
+%find_lang %{name} --all-name
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -149,9 +156,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
 
-%files -f %{name}-timezones.lang
+%files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS README README.md
+%doc AUTHORS README README.md debian/changelog
 %attr(755,root,root) %{_bindir}/cinnamon-control-center
 %dir %{_libdir}/cinnamon-control-center-1
 %dir %{_libdir}/cinnamon-control-center-1/panels
