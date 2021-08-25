@@ -40,6 +40,7 @@ BuildRequires:	libxml2-devel >= 2.0
 BuildRequires:	meson >= 0.49.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	polkit-devel >= 0.103
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXi-devel >= 1.2
 BuildRequires:	xorg-lib-libXxf86misc-devel
