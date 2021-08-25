@@ -1,4 +1,4 @@
-%define	translations_version	4.8.3
+%define	translations_version	5.0.2
 %define	cinnamon_desktop_ver	4.6.0
 %define	csd_ver			4.4.0
 %define	cinnamon_menus_ver	4.4.0
@@ -6,16 +6,16 @@
 Summary:	Utilities to configure the Cinnamon desktop
 Summary(pl.UTF-8):	Narzędzia do konfiguracji środowiska Cinnamon
 Name:		cinnamon-control-center
-Version:	4.8.2
-Release:	4
+Version:	5.0.2
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/cinnamon-control-center/releases
 Source0:	https://github.com/linuxmint/cinnamon-control-center/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	731647c6c1fe053b99920191fb1561b3
+# Source0-md5:	151e33d7599311fb6ab166a06d5139ef
 #Source1Download: https://github.com/linuxmint/cinnamon-translations/releases
 Source1:	https://github.com/linuxmint/cinnamon-translations/archive/%{translations_version}/cinnamon-translations-%{translations_version}.tar.gz
-# Source1-md5:	a68529f0f1a6c7f8b693a81095bece96
+# Source1-md5:	6e40b7f545138907148af3377e628d63
 Patch0:		%{name}-gnomekbd.patch
 URL:		https://github.com/linuxmint/cinnamon-control-center
 BuildRequires:	ModemManager-devel >= 0.7
@@ -45,6 +45,7 @@ BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXi-devel >= 1.2
 BuildRequires:	xorg-lib-libXxf86misc-devel
+Requires(post,postun):	glib2-devel >= 1:2.44.0
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	NetworkManager >= 2:1.8.0
 # nm-connection-editor for the network panel
@@ -138,6 +139,12 @@ cd ..
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post
+%glib_compile_schemas
+
+%postun
+%glib_compile_schemas
+
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
 
@@ -155,6 +162,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/cinnamon-control-center-1/panels/libwacom-properties.so
 %dir %{_datadir}/cinnamon-control-center
 %{_datadir}/cinnamon-control-center/ui
+%{_datadir}/glib-2.0/schemas/org.cinnamon.control-center.display.gschema.xml
 %{_desktopdir}/cinnamon-color-panel.desktop
 %{_desktopdir}/cinnamon-display-panel.desktop
 %{_desktopdir}/cinnamon-network-panel.desktop
