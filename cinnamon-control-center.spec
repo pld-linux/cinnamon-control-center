@@ -7,7 +7,7 @@ Summary:	Utilities to configure the Cinnamon desktop
 Summary(pl.UTF-8):	Narzędzia do konfiguracji środowiska Cinnamon
 Name:		cinnamon-control-center
 Version:	4.8.2
-Release:	3
+Release:	4
 License:	GPL v2+
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/cinnamon-control-center/releases
@@ -16,6 +16,7 @@ Source0:	https://github.com/linuxmint/cinnamon-control-center/archive/%{version}
 #Source1Download: https://github.com/linuxmint/cinnamon-translations/releases
 Source1:	https://github.com/linuxmint/cinnamon-translations/archive/%{translations_version}/cinnamon-translations-%{translations_version}.tar.gz
 # Source1-md5:	a68529f0f1a6c7f8b693a81095bece96
+Patch0:		%{name}-gnomekbd.patch
 URL:		https://github.com/linuxmint/cinnamon-control-center
 BuildRequires:	ModemManager-devel >= 0.7
 BuildRequires:	NetworkManager-devel >= 2:1.8.0
@@ -32,7 +33,7 @@ BuildRequires:	glib2-devel >= 1:2.44.0
 BuildRequires:	gnome-online-accounts-devel >= 3.21.5
 BuildRequires:	gtk+3-devel >= 3.16.0
 BuildRequires:	iso-codes
-BuildRequires:	libgnomekbd-devel >= 3.0
+BuildRequires:	libgnomekbd-devel >= 3.28
 BuildRequires:	libnotify-devel >= 0.7.3
 BuildRequires:	libwacom-devel >= 0.27
 BuildRequires:	libxklavier-devel >= 5.1
@@ -58,7 +59,7 @@ Requires:	gdk-pixbuf2 >= 2.23.0
 Requires:	gnome-color-manager
 Requires:	hicolor-icon-theme
 Requires:	iso-codes
-Requires:	libgnomekbd >= 3.0
+Requires:	libgnomekbd >= 3.28
 Requires:	libnotify >= 0.7.3
 Requires:	libwacom >= 0.27
 Requires:	libxklavier >= 5.1
@@ -108,6 +109,7 @@ Pliki nagłówkowe Cinnamon control center.
 
 %prep
 %setup -q -a1
+%patch0 -p1
 
 %build
 %meson build
