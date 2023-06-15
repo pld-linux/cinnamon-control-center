@@ -1,4 +1,4 @@
-%define	translations_version	5.0.2
+%define	translations_version	5.8.1
 %define	cinnamon_desktop_ver	4.6.0
 %define	csd_ver			4.4.0
 %define	cinnamon_menus_ver	4.4.0
@@ -6,17 +6,16 @@
 Summary:	Utilities to configure the Cinnamon desktop
 Summary(pl.UTF-8):	Narzędzia do konfiguracji środowiska Cinnamon
 Name:		cinnamon-control-center
-Version:	5.0.2
+Version:	5.8.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/cinnamon-control-center/releases
 Source0:	https://github.com/linuxmint/cinnamon-control-center/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	151e33d7599311fb6ab166a06d5139ef
+# Source0-md5:	208a363e176ca65e96e170889b644618
 #Source1Download: https://github.com/linuxmint/cinnamon-translations/releases
 Source1:	https://github.com/linuxmint/cinnamon-translations/archive/%{translations_version}/cinnamon-translations-%{translations_version}.tar.gz
-# Source1-md5:	6e40b7f545138907148af3377e628d63
-Patch0:		%{name}-gnomekbd.patch
+# Source1-md5:	b9ea707443c81e4340b0cb219d289130
 URL:		https://github.com/linuxmint/cinnamon-control-center
 BuildRequires:	ModemManager-devel >= 0.7
 BuildRequires:	NetworkManager-devel >= 2:1.8.0
@@ -25,7 +24,6 @@ BuildRequires:	cinnamon-desktop-devel >= %{cinnamon_desktop_ver}
 BuildRequires:	cinnamon-menus-devel >= %{cinnamon_menus_ver}
 BuildRequires:	cinnamon-settings-daemon-devel >= %{csd_ver}
 BuildRequires:	colord-devel >= 0.1.14
-BuildRequires:	dbus-glib-devel
 BuildRequires:	fontconfig-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.23.0
 BuildRequires:	gettext-tools
@@ -34,6 +32,7 @@ BuildRequires:	gnome-online-accounts-devel >= 3.21.5
 BuildRequires:	gtk+3-devel >= 3.16.0
 BuildRequires:	iso-codes
 BuildRequires:	libgnomekbd-devel >= 3.28
+BuildRequires:	libgudev-devel >= 232
 BuildRequires:	libnotify-devel >= 0.7.3
 BuildRequires:	libwacom-devel >= 0.27
 BuildRequires:	libxklavier-devel >= 5.1
@@ -42,6 +41,7 @@ BuildRequires:	meson >= 0.49.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	polkit-devel >= 0.103
 BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	upower-devel >= 0.99.8
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXi-devel >= 1.2
 BuildRequires:	xorg-lib-libXxf86misc-devel
@@ -61,10 +61,12 @@ Requires:	gnome-color-manager
 Requires:	hicolor-icon-theme
 Requires:	iso-codes
 Requires:	libgnomekbd >= 3.28
+Requires:	libgudev >= 232
 Requires:	libnotify >= 0.7.3
 Requires:	libwacom >= 0.27
 Requires:	libxklavier >= 5.1
 Requires:	polkit >= 0.103
+Requires:	upower >= 0.99.8
 Requires:	xorg-lib-libXi >= 1.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -110,7 +112,6 @@ Pliki nagłówkowe Cinnamon control center.
 
 %prep
 %setup -q -a1
-%patch0 -p1
 
 %build
 %meson build
@@ -161,12 +162,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/cinnamon-control-center-1/panels/libregion.so
 %{_libdir}/cinnamon-control-center-1/panels/libwacom-properties.so
 %dir %{_datadir}/cinnamon-control-center
+%{_datadir}/cinnamon-control-center/panels
 %{_datadir}/cinnamon-control-center/ui
 %{_datadir}/glib-2.0/schemas/org.cinnamon.control-center.display.gschema.xml
 %{_desktopdir}/cinnamon-color-panel.desktop
 %{_desktopdir}/cinnamon-display-panel.desktop
 %{_desktopdir}/cinnamon-network-panel.desktop
-%{_desktopdir}/cinnamon-region-panel.desktop
 %{_desktopdir}/cinnamon-wacom-panel.desktop
 %{_iconsdir}/hicolor/*x*/apps/cinnamon-preferences-*.png
 %{_iconsdir}/hicolor/*x*/apps/cs-online-accounts.png
