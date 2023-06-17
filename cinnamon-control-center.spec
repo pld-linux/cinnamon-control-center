@@ -7,7 +7,7 @@ Summary:	Utilities to configure the Cinnamon desktop
 Summary(pl.UTF-8):	Narzędzia do konfiguracji środowiska Cinnamon
 Name:		cinnamon-control-center
 Version:	5.8.1
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/cinnamon-control-center/releases
