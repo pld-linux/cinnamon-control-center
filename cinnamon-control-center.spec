@@ -44,7 +44,6 @@ BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	upower-devel >= 0.99.8
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXi-devel >= 1.2
-BuildRequires:	xorg-lib-libXxf86misc-devel
 Requires(post,postun):	glib2-devel >= 1:2.44.0
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	NetworkManager >= 2:1.8.0
