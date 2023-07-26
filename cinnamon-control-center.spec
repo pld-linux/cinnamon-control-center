@@ -1,4 +1,4 @@
-%define	translations_version	5.8.1
+%define	translations_version	5.8.2
 %define	cinnamon_desktop_ver	4.6.0
 %define	csd_ver			4.4.0
 %define	cinnamon_menus_ver	4.4.0
@@ -6,16 +6,16 @@
 Summary:	Utilities to configure the Cinnamon desktop
 Summary(pl.UTF-8):	Narzędzia do konfiguracji środowiska Cinnamon
 Name:		cinnamon-control-center
-Version:	5.8.1
-Release:	2
+Version:	5.8.2
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/cinnamon-control-center/releases
 Source0:	https://github.com/linuxmint/cinnamon-control-center/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	208a363e176ca65e96e170889b644618
+# Source0-md5:	b439afe580c8d0dd294d7255d9e8a6e1
 #Source1Download: https://github.com/linuxmint/cinnamon-translations/releases
 Source1:	https://github.com/linuxmint/cinnamon-translations/archive/%{translations_version}/cinnamon-translations-%{translations_version}.tar.gz
-# Source1-md5:	b9ea707443c81e4340b0cb219d289130
+# Source1-md5:	ec085ca8784b03b74d5769a9d3bcd031
 URL:		https://github.com/linuxmint/cinnamon-control-center
 BuildRequires:	ModemManager-devel >= 0.7
 BuildRequires:	NetworkManager-devel >= 2:1.8.0
@@ -169,7 +169,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/cinnamon-network-panel.desktop
 %{_desktopdir}/cinnamon-wacom-panel.desktop
 %{_iconsdir}/hicolor/*x*/apps/cinnamon-preferences-*.png
-%{_iconsdir}/hicolor/*x*/apps/cs-online-accounts.png
 %{_iconsdir}/hicolor/scalable/apps/cinnamon-preferences-*.svg
 
 %files libs
