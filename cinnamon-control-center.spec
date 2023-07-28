@@ -7,7 +7,7 @@ Summary:	Utilities to configure the Cinnamon desktop
 Summary(pl.UTF-8):	Narzędzia do konfiguracji środowiska Cinnamon
 Name:		cinnamon-control-center
 Version:	5.8.2
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/cinnamon-control-center/releases
@@ -131,7 +131,7 @@ done
 cd ..
 
 # not supported by glibc
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ie,frp,zgh}
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ie,frp,rue,zgh}
 
 # cinnamon-control-center (from translations) and cinnamon-control-center-timezones domains
 %find_lang %{name} --all-name
