@@ -1,4 +1,8 @@
-%define	translations_version	5.8.2
+#
+# Conditional build:
+%bcond_with	goa	# online accounts dialog (deprecated)
+
+%define	translations_version	6.0.2
 %define	cinnamon_desktop_ver	4.6.0
 %define	csd_ver			4.4.0
 %define	cinnamon_menus_ver	4.4.0
@@ -6,16 +10,16 @@
 Summary:	Utilities to configure the Cinnamon desktop
 Summary(pl.UTF-8):	Narzędzia do konfiguracji środowiska Cinnamon
 Name:		cinnamon-control-center
-Version:	5.8.2
-Release:	2
+Version:	6.0.1
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/cinnamon-control-center/releases
 Source0:	https://github.com/linuxmint/cinnamon-control-center/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	b439afe580c8d0dd294d7255d9e8a6e1
+# Source0-md5:	ee3379a326a5603c474a5de02a1d42fa
 #Source1Download: https://github.com/linuxmint/cinnamon-translations/releases
 Source1:	https://github.com/linuxmint/cinnamon-translations/archive/%{translations_version}/cinnamon-translations-%{translations_version}.tar.gz
-# Source1-md5:	ec085ca8784b03b74d5769a9d3bcd031
+# Source1-md5:	36552df46587be4e32ac311b8d7084e4
 URL:		https://github.com/linuxmint/cinnamon-control-center
 BuildRequires:	ModemManager-devel >= 0.7
 BuildRequires:	NetworkManager-devel >= 2:1.8.0
@@ -28,7 +32,10 @@ BuildRequires:	fontconfig-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.23.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.44.0
+%if %{with goa}
 BuildRequires:	gnome-online-accounts-devel >= 3.21.5
+BuildRequires:	gnome-online-accounts-devel < 3.50
+%endif
 BuildRequires:	gtk+3-devel >= 3.16.0
 BuildRequires:	iso-codes
 BuildRequires:	libgnomekbd-devel >= 3.28
@@ -37,7 +44,7 @@ BuildRequires:	libnotify-devel >= 0.7.3
 BuildRequires:	libwacom-devel >= 0.27
 BuildRequires:	libxklavier-devel >= 5.1
 BuildRequires:	libxml2-devel >= 2.0
-BuildRequires:	meson >= 0.49.0
+BuildRequires:	meson >= 0.56.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	polkit-devel >= 0.103
 BuildRequires:	rpmbuild(macros) >= 1.736
@@ -113,7 +120,8 @@ Pliki nagłówkowe Cinnamon control center.
 %setup -q -a1
 
 %build
-%meson build
+%meson build \
+	%{!?with_goa:-Donlineaccounts=false}
 
 %ninja_build -C build
 
@@ -157,7 +165,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/cinnamon-control-center-1/panels/libcolor.so
 %{_libdir}/cinnamon-control-center-1/panels/libdisplay.so
 %{_libdir}/cinnamon-control-center-1/panels/libnetwork.so
+%if %{with goa}
 %{_libdir}/cinnamon-control-center-1/panels/libonline-accounts.so
+%endif
 %{_libdir}/cinnamon-control-center-1/panels/libregion.so
 %{_libdir}/cinnamon-control-center-1/panels/libwacom-properties.so
 %dir %{_datadir}/cinnamon-control-center
