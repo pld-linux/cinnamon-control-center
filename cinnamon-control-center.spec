@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_with	goa	# online accounts dialog (deprecated)
 
-%define	translations_version	6.2.2
+%define	translations_version	6.4.1
 %define	cinnamon_desktop_ver	4.6.0
 %define	csd_ver			4.4.0
 %define	cinnamon_menus_ver	4.4.0
@@ -10,16 +10,16 @@
 Summary:	Utilities to configure the Cinnamon desktop
 Summary(pl.UTF-8):	Narzędzia do konfiguracji środowiska Cinnamon
 Name:		cinnamon-control-center
-Version:	6.2.0
+Version:	6.4.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/cinnamon-control-center/releases
 Source0:	https://github.com/linuxmint/cinnamon-control-center/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	6d7f990ecaab8cfa8585c670b1de5ad6
+# Source0-md5:	58b1225aa4b361ef009f0189f893c4b6
 #Source1Download: https://github.com/linuxmint/cinnamon-translations/releases
 Source1:	https://github.com/linuxmint/cinnamon-translations/archive/%{translations_version}/cinnamon-translations-%{translations_version}.tar.gz
-# Source1-md5:	ca66b0eadc9416ef66384b3b278554ad
+# Source1-md5:	2d12def6818b100664081e979343d214
 URL:		https://github.com/linuxmint/cinnamon-control-center
 BuildRequires:	ModemManager-devel >= 0.7
 BuildRequires:	NetworkManager-devel >= 2:1.8.0
